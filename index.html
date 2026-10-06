@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kil & Taş Atölyesi</title>
+  <style>
+    :root {
+      --bg: #faf6f0;
+      --card: #ffffff;
+      --text: #3b2f2a;
+      --muted: #8a7b72;
+      --accent: #b5654a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header { text-align: center; padding: 48px 16px 24px; }
+    header h1 { margin: 0 0 8px; font-size: 2.2rem; }
+    header p { margin: 0; color: var(--muted); }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      padding: 2px 10px;
+      margin-bottom: 10px;
+    }
+    .card h2 { margin: 0 0 6px; font-size: 1.2rem; }
+    .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; }
+    .price { font-weight: bold; color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kil &amp; Taş Atölyesi</h1>
+    <p>El yapımı seramik, takı ve doğal taş süs eşyaları</p>
+  </header>
+
+  <main>
+    <article class="card">
+      <span class="tag">Seramik</span>
+      <h2>El Yapımı Kahve Fincanı</h2>
+      <p>Mat sırlı, toprak tonlarında, 200 ml. Her biri tek tek şekillendirilir.</p>
+      <span class="price">450 ₺</span>
+    </article>
+
+    <article class="card">
+      <span class="tag">Takı</span>
+      <h2>Doğal Taş Bileklik</h2>
+      <p>Ametist ve kuvars boncuklardan, ayarlanabilir ipli bileklik.</p>
+      <span class="price">320 ₺</span>
+    </article>
+
+    <article class="card">
+      <span class="tag">Doğal Taş</span>
+      <h2>Yontma Mermer Kalemlik</h2>
+      <p>Elde yontulmuş mermer, masaüstü için küçük bir süs eşyası.</p>
+      <span class="price">680 ₺</span>
+    </article>
+  </main>
+</body>
+</html>
