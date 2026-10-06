@@ -5,14 +5,15 @@ export async function sendWebhook(payload) {
   if (!WEBHOOK_URL) {
     throw new Error('VITE_WEBHOOK_URL tanımlı değil (.env dosyasına bak).');
   }
-  const res = await fetch(WEBHOOK_URL, {
+  // text/plain + no-cors: tarayıcı OPTIONS ön kontrolü (preflight) yapmadan
+  // doğrudan POST atar. Yanıt okunamaz; ağ hatası olursa fetch yine hata fırlatır.
+  // Hafta 2'de backend/API route'a taşınınca bu kısıt kalkacak.
+  await fetch(WEBHOOK_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
     body: JSON.stringify({ ...payload, source: SOURCE }),
   });
-  if (!res.ok) {
-    throw new Error(`Webhook ${res.status} döndürdü.`);
-  }
 }
 
 export const orderPayload = (product, form) => ({
