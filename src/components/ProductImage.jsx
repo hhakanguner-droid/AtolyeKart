@@ -4,7 +4,10 @@ const looks = {
   'Doğal Taş': { emoji: '🪨', from: '#d4d4d4', to: '#8d8d8d' },
 };
 
-export default function ProductImage({ category, name }) {
+export default function ProductImage({ category, name, src }) {
+  if (src) {
+    return <img className="product-image product-image--photo" src={src} alt={name} loading="lazy" />;
+  }
   const look = looks[category] ?? looks['Doğal Taş'];
   return (
     <div

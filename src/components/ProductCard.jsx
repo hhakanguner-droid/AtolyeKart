@@ -4,12 +4,12 @@ import RequestForm from './RequestForm.jsx';
 import { orderPayload, stockPayload } from '../lib/webhook.js';
 
 export default function ProductCard({ product }) {
-  const { name, category, price, description, inStock } = product;
+  const { name, category, price, description, inStock, image } = product;
   const [open, setOpen] = useState(false);
 
   return (
     <article className={`card${inStock ? '' : ' card--soldout'}`}>
-      <ProductImage category={category} name={name} />
+      <ProductImage category={category} name={name} src={image} />
       <div className="card-body">
         <span className="tag">{category}</span>
         <h2>{name}</h2>

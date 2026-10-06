@@ -1,5 +1,5 @@
 export const products = [
-  { id: 'p1', name: 'El Yapımı Kahve Fincanı', category: 'Seramik', price: 450, description: 'Mat sırlı, toprak tonlarında, 200 ml. Her biri tek tek şekillendirilir.', inStock: true },
+  { id: 'p1', name: 'El Yapımı Kahve Fincanı', category: 'Seramik', price: 450, description: 'Mat sırlı, toprak tonlarında, 200 ml. Her biri tek tek şekillendirilir.', inStock: true, image: '/images/p1.jpg' },
   { id: 'p2', name: 'İki Kişilik Çay Seti', category: 'Seramik', price: 890, description: 'Demlik ve iki fincandan oluşan, el boyaması set.', inStock: true },
   { id: 'p3', name: 'Dekoratif Vazo', category: 'Seramik', price: 540, description: 'Kabartma desenli, kuru çiçekler için ince boyunlu vazo.', inStock: false },
   { id: 'p4', name: 'Doğal Taş Bileklik', category: 'Takı', price: 320, description: 'Ametist ve kuvars boncuklardan, ayarlanabilir ipli bileklik.', inStock: true },
