@@ -105,3 +105,6 @@ body {
 }
 .success { color: #2f7a4b; }
 .error { color: #a33; font-size: 0.9rem; }
+.qr { text-align: center; padding: 32px 16px 48px; color: var(--muted); }
+.qr svg { padding: 10px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.qr p { margin: 12px 0 0; font-size: 0.9rem; }
