@@ -15,7 +15,7 @@ Eğitim projesi: BizCard'ın yanında yürüyen ikinci proje. Haftalık ödev se
 ## Teknik durum
 - Vite + React. Sayfa bölümleri `src/components/` altında: `Header`, `Hero`, `TrustStrip`, `CategoryFilter`, `ProductList`, `ProductCard`, `ProductImage`, `Story`, `CatalogQR`, `MobileBar`
 - Pencereler: `Modal` (ortak kabuk), `ProductDetail` (ürün detayı), `RequestForm` (stokta olana sipariş, tükenene stok bildirimi)
-- Ürün verisi `src/data/products.js` içinde `products` dizisi (id, name, category, price, description, inStock, badge, image, specs)
+- Ürün verisi `src/data/products.js` içinde `products` dizisi (id, name, category, price, description, stock, badge, image, specs). `stock` depodaki adettir (0 = tükendi); 'var mı / az mı' kararı yalnızca `src/lib/stock.js` yardımcılarıyla verilir, bileşenler `stock`'u doğrudan karşılaştırmaz. Stok sayıları örnektir ve siparişle azalmaz (backend Hafta 2+).
 - Ürün fotoğrafları `public/images/pN.jpg`. Fotoğrafı olmayan ürün kategori renginde emoji kutusu gösterir.
 - WhatsApp: numarasız `wa.me/?text=...` bağlantısı (`src/lib/whatsapp.js`), kişi seçtirir, mesaj hazır gelir.
 - Tasarım: toprak tonları, başlıkta Cormorant Garamond, gövdede Manrope, arka planda sabit taş damarı. Renkler `src/styles.css` başındaki değişkenlerde; karanlık mod destekli.

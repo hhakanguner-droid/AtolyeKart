@@ -1,9 +1,11 @@
 import ProductImage from './ProductImage.jsx';
 import { formatPrice } from '../lib/format.js';
 import { whatsappUrl, productMessage } from '../lib/whatsapp.js';
+import { isInStock } from '../lib/stock.js';
 
 export default function ProductDetail({ product, onRequest }) {
-  const { name, category, price, description, inStock, image, specs } = product;
+  const { name, category, price, description, image, specs } = product;
+  const inStock = isInStock(product);
   const rows = [...specs, ['Hazırlık', inStock ? 'Hazır, 1-2 günde kargoda' : 'Şu an stokta yok']];
 
   return (

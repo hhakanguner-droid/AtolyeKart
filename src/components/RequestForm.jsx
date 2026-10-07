@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { sendWebhook, orderPayload, stockPayload } from '../lib/webhook.js';
+import { isInStock, maxOrderQuantity } from '../lib/stock.js';
 
 // Stokta olan ürün için sipariş, tükenen ürün için stok bildirimi formu.
 const MODES = {
@@ -20,7 +21,7 @@ const MODES = {
 };
 
 export default function RequestForm({ product, onClose }) {
-  const mode = MODES[product.inStock ? 'order' : 'stock'];
+  const mode = MODES[isInStock(product) ? 'order' : 'stock'];
   const [form, setForm] = useState({ name: '', phone: '', email: '', quantity: 1 });
   const [status, setStatus] = useState('idle'); // idle | sending | done | error
   const [error, setError] = useState('');
@@ -66,7 +67,7 @@ export default function RequestForm({ product, onClose }) {
       </label>
       {mode.fields.includes('quantity') && (
         <label>Adet
-          <input required type="number" min="1" max="20" value={form.quantity} onChange={update('quantity')} />
+          <input required type="number" min="1" max={maxOrderQuantity(product)} value={form.quantity} onChange={update('quantity')} />
         </label>
       )}
       {status === 'error' && <p className="error">Gönderilemedi: {error}</p>}

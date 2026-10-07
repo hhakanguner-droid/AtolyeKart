@@ -11,12 +11,13 @@ import Modal from './components/Modal.jsx';
 import ProductDetail from './components/ProductDetail.jsx';
 import RequestForm from './components/RequestForm.jsx';
 import { products, categories, ALL_CATEGORIES } from './data/products.js';
+import { isInStock } from './lib/stock.js';
 
 // Ekran okuyucuya söylenen pencere adı
 const modalLabel = ({ type, product }) =>
   type === 'detail'
     ? `${product.name} ürün detayı`
-    : `${product.inStock ? 'Sipariş Ver' : 'Stok Bildirimi İste'}: ${product.name}`;
+    : `${isInStock(product) ?'Sipariş Ver' : 'Stok Bildirimi İste'}: ${product.name}`;
 
 export default function App() {
   const [category, setCategory] = useState(ALL_CATEGORIES);
