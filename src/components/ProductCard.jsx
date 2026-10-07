@@ -1,15 +1,22 @@
 import ProductImage from './ProductImage.jsx';
 import { formatPrice } from '../lib/format.js';
+import { isInStock, isLowStock } from '../lib/stock.js';
 
-const BADGES = {
-  new: { text: 'Yeni', className: 'badge new' },
-  low: { text: 'Son 2 adet', className: 'badge low' },
-};
+const NEW_BADGE = { text: 'Yeni', className: 'badge new' };
 const SOLD_OUT = { text: 'Tükendi', className: 'badge out' };
+const lowBadge = (stock) => ({ text: `Son ${stock} adet`, className: 'badge low' });
+
+// Rozet önceliği: tükendi > az kaldı > yeni
+function badgeFor(product) {
+  if (!isInStock(product)) return SOLD_OUT;
+  if (isLowStock(product)) return lowBadge(product.stock);
+  return product.badge === 'new' ? NEW_BADGE : null;
+}
 
 export default function ProductCard({ product, onOpenDetail, onRequest }) {
-  const { name, category, price, description, inStock, badge, image } = product;
-  const badgeInfo = inStock ? BADGES[badge] : SOLD_OUT;
+  const { name, category, price, description, image } = product;
+  const inStock = isInStock(product);
+  const badgeInfo = badgeFor(product);
 
   return (
     <article className={`card${inStock ? '' : ' soldout'}`}>
