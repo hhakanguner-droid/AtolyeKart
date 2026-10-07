@@ -19,6 +19,7 @@ Eğitim projesi: BizCard'ın yanında yürüyen ikinci proje. Haftalık ödev se
 - Ürün fotoğrafları `public/images/pN.jpg`. Fotoğrafı olmayan ürün kategori renginde emoji kutusu gösterir.
 - WhatsApp: numarasız `wa.me/?text=...` bağlantısı (`src/lib/whatsapp.js`), kişi seçtirir, mesaj hazır gelir.
 - Tasarım: toprak tonları, başlıkta Cormorant Garamond, gövdede Manrope, arka planda sabit taş damarı. Renkler `src/styles.css` başındaki değişkenlerde; karanlık mod destekli.
+- Skill'ler `.claude/skills/` altında: `atolyekart-bilesen-standartlari` (bileşen, stil, erişilebilirlik, bitirmeden önce kontroller) ve `atolyekart-webhook-formati` (webhook sözleşmesi, gönderim, gizlilik, test). Bileşen ya da form işine başlamadan önce ilgili skill'i oku.
 
 ## Webhook veri sözleşmesi (Hafta 1)
 - Sipariş: `event, name, productId, productName, phone, email, quantity, source`
