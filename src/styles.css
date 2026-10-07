@@ -9,6 +9,7 @@
   --accent-ink: #ffffff;
   --good: #3f6b50;
   --warn: #9a5410;
+  --danger: #b3261e;
   --display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
   /* Taş damarı: mermer çizgilerini andıran ince kıvrımlar */
@@ -17,7 +18,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --bg: #1b1511; --surface: #251d17; --ink: #f3e9dc; --muted: #b3a393; --line: #3a2f27;
-    --accent: #e07a52; --accent-ink: #1b1511; --good: #8fc29f; --warn: #e0a05a;
+    --accent: #e07a52; --accent-ink: #1b1511; --good: #8fc29f; --warn: #e0a05a; --danger: #ff8a7a;
     --vein: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 900' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23d9c4ac' stroke-width='1.2' stroke-opacity='.26'%3E%3Cpath d='M-50 120C200 60 320 260 560 200S900 40 1250 180'/%3E%3Cpath d='M-50 430C150 360 380 520 640 430S1000 330 1250 470'/%3E%3Cpath d='M200 -20C260 180 180 360 330 520S460 800 420 940'/%3E%3Cpath d='M900 -20C840 160 960 300 880 470S1000 760 940 940'/%3E%3C/g%3E%3Cg fill='none' stroke='%23d9c4ac' stroke-width='.6' stroke-opacity='.2'%3E%3Cpath d='M-50 160C220 110 300 300 580 250S880 90 1250 230'/%3E%3Cpath d='M-50 470C170 410 400 560 650 470S980 380 1250 520'/%3E%3Cpath d='M240 -20C300 190 220 380 370 540S500 820 460 940'/%3E%3C/g%3E%3C/svg%3E");
     color-scheme: dark;
   }
@@ -152,7 +153,7 @@ input {
   border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit;
 }
 .ok { color: var(--good); font-weight: 500; margin: 6px 0 14px; }
-.error { color: #c0392b; font-size: 0.9rem; }
+.error { color: var(--danger); font-size: 0.9rem; }
 
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; gap: 24px; padding-block: 10px 32px; }
@@ -169,6 +170,7 @@ input {
   .foot-note { padding-bottom: 90px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .card, .product-photo, .btn { transition: none; }
-  .card:hover, .card:hover .product-photo, .btn-primary:hover { transform: none; }
+  /* Seçiciler yukarıdaki taban kurallarla aynı özgüllükte olmalı, yoksa kaybeder. */
+  .card, .card-photo .product-photo, .btn { transition: none; }
+  .card:hover, .card:hover .card-photo .product-photo, .btn-primary:hover { transform: none; }
 }

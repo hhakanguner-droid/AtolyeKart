@@ -12,6 +12,12 @@ import ProductDetail from './components/ProductDetail.jsx';
 import RequestForm from './components/RequestForm.jsx';
 import { products, categories, ALL_CATEGORIES } from './data/products.js';
 
+// Ekran okuyucuya söylenen pencere adı
+const modalLabel = ({ type, product }) =>
+  type === 'detail'
+    ? `${product.name} ürün detayı`
+    : `${product.inStock ? 'Sipariş Ver' : 'Stok Bildirimi İste'}: ${product.name}`;
+
 export default function App() {
   const [category, setCategory] = useState(ALL_CATEGORIES);
   const [modal, setModal] = useState(null); // { type: 'detail' | 'request', product }
@@ -26,19 +32,21 @@ export default function App() {
       <div className="bgfx" aria-hidden="true" />
       <div className="wrap">
         <Header />
-        <Hero />
-        <TrustStrip />
+        <main>
+          <Hero />
+          <TrustStrip />
 
-        <section id="urunler">
-          <div className="shop-head">
-            <h2>Vitrin</h2>
-            <span className="count" aria-live="polite">{visible.length} ürün</span>
-          </div>
-          <CategoryFilter categories={categories} active={category} onChange={setCategory} />
-          <ProductList products={visible} onOpenDetail={openDetail} onRequest={openRequest} />
-        </section>
+          <section id="urunler">
+            <div className="shop-head">
+              <h2>Vitrin</h2>
+              <span className="count" aria-live="polite">{visible.length} ürün</span>
+            </div>
+            <CategoryFilter categories={categories} active={category} onChange={setCategory} />
+            <ProductList products={visible} onOpenDetail={openDetail} onRequest={openRequest} />
+          </section>
 
-        <Story />
+          <Story />
+        </main>
         <CatalogQR />
         <p className="foot-note">Güner Doğaltaş · Eğitim projesi. Ürün bilgileri örnektir.</p>
       </div>
@@ -46,7 +54,7 @@ export default function App() {
       <MobileBar />
 
       {modal && (
-        <Modal key={modal.type} onClose={close} narrow={modal.type === 'request'}>
+        <Modal key={modal.type} onClose={close} label={modalLabel(modal)} narrow={modal.type === 'request'}>
           {modal.type === 'detail' ? (
             <ProductDetail product={modal.product} onRequest={openRequest} />
           ) : (
