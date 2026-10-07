@@ -1,9 +1,26 @@
 import { useState } from 'react';
-import { sendWebhook } from '../lib/webhook.js';
+import { sendWebhook, orderPayload, stockPayload } from '../lib/webhook.js';
 
-// Sipariş ve stok bildirimi formlarının ortak iskeleti.
-// fields: gösterilecek alanlar, buildPayload: webhook gövdesini üretir.
-export default function RequestForm({ title, product, fields, buildPayload, submitLabel, successText, onClose }) {
+// Stokta olan ürün için sipariş, tükenen ürün için stok bildirimi formu.
+const MODES = {
+  order: {
+    title: 'Sipariş Ver',
+    fields: ['phone', 'quantity'],
+    buildPayload: orderPayload,
+    submitLabel: 'Siparişi Gönder',
+    successText: 'Siparişin alındı, seninle iletişime geçeceğiz. Teşekkürler!',
+  },
+  stock: {
+    title: 'Stok Bildirimi İste',
+    fields: [],
+    buildPayload: stockPayload,
+    submitLabel: 'Beni Haberdar Et',
+    successText: 'Ürün tekrar stoğa girince e-postayla haber vereceğiz.',
+  },
+};
+
+export default function RequestForm({ product, onClose }) {
+  const mode = MODES[product.inStock ? 'order' : 'stock'];
   const [form, setForm] = useState({ name: '', phone: '', email: '', quantity: 1 });
   const [status, setStatus] = useState('idle'); // idle | sending | done | error
   const [error, setError] = useState('');
@@ -14,7 +31,7 @@ export default function RequestForm({ title, product, fields, buildPayload, subm
     e.preventDefault();
     setStatus('sending');
     try {
-      await sendWebhook(buildPayload(product, form));
+      await sendWebhook(mode.buildPayload(product, form));
       setStatus('done');
     } catch (err) {
       setError(err.message);
@@ -22,43 +39,40 @@ export default function RequestForm({ title, product, fields, buildPayload, subm
     }
   }
 
-  return (
-    <div className="overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <button className="close" onClick={onClose} aria-label="Kapat">×</button>
-        <h3>{title}</h3>
-        <p className="modal-product">{product.name}</p>
-
-        {status === 'done' ? (
-          <>
-            <p className="success">{successText}</p>
-            <button className="btn" onClick={onClose}>Tamam</button>
-          </>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <label>Ad Soyad
-              <input required value={form.name} onChange={update('name')} />
-            </label>
-            {fields.includes('phone') && (
-              <label>Telefon
-                <input required type="tel" value={form.phone} onChange={update('phone')} />
-              </label>
-            )}
-            <label>E-posta
-              <input required type="email" value={form.email} onChange={update('email')} />
-            </label>
-            {fields.includes('quantity') && (
-              <label>Adet
-                <input required type="number" min="1" max="20" value={form.quantity} onChange={update('quantity')} />
-              </label>
-            )}
-            {status === 'error' && <p className="error">Gönderilemedi: {error}</p>}
-            <button className="btn" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Gönderiliyor…' : submitLabel}
-            </button>
-          </form>
-        )}
+  if (status === 'done') {
+    return (
+      <div className="form-box">
+        <h3>{mode.title}</h3>
+        <p className="ok">{mode.successText}</p>
+        <button type="button" className="btn btn-ghost btn-block" onClick={onClose}>Tamam</button>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <form className="form-box" onSubmit={handleSubmit}>
+      <h3>{mode.title}</h3>
+      <p className="sub">{product.name}</p>
+      <label>Ad Soyad
+        <input required value={form.name} onChange={update('name')} autoComplete="name" />
+      </label>
+      {mode.fields.includes('phone') && (
+        <label>Telefon
+          <input required type="tel" value={form.phone} onChange={update('phone')} autoComplete="tel" />
+        </label>
+      )}
+      <label>E-posta
+        <input required type="email" value={form.email} onChange={update('email')} autoComplete="email" />
+      </label>
+      {mode.fields.includes('quantity') && (
+        <label>Adet
+          <input required type="number" min="1" max="20" value={form.quantity} onChange={update('quantity')} />
+        </label>
+      )}
+      {status === 'error' && <p className="error">Gönderilemedi: {error}</p>}
+      <button className="btn btn-primary btn-block" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Gönderiliyor…' : mode.submitLabel}
+      </button>
+    </form>
   );
 }
