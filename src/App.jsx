@@ -1,16 +1,59 @@
+import { useCallback, useState } from 'react';
+import Header from './components/Header.jsx';
+import Hero from './components/Hero.jsx';
+import TrustStrip from './components/TrustStrip.jsx';
+import CategoryFilter from './components/CategoryFilter.jsx';
 import ProductList from './components/ProductList.jsx';
+import Story from './components/Story.jsx';
 import CatalogQR from './components/CatalogQR.jsx';
-import { products } from './data/products.js';
+import MobileBar from './components/MobileBar.jsx';
+import Modal from './components/Modal.jsx';
+import ProductDetail from './components/ProductDetail.jsx';
+import RequestForm from './components/RequestForm.jsx';
+import { products, categories, ALL_CATEGORIES } from './data/products.js';
 
 export default function App() {
+  const [category, setCategory] = useState(ALL_CATEGORIES);
+  const [modal, setModal] = useState(null); // { type: 'detail' | 'request', product }
+
+  const visible = category === ALL_CATEGORIES ? products : products.filter((p) => p.category === category);
+  const close = useCallback(() => setModal(null), []);
+  const openDetail = (product) => setModal({ type: 'detail', product });
+  const openRequest = (product) => setModal({ type: 'request', product });
+
   return (
     <>
-      <header className="header">
-        <h1>Güner Doğaltaş</h1>
-        <p>El yapımı seramik, takı ve doğal taş süs eşyaları</p>
-      </header>
-      <ProductList products={products} />
-      <CatalogQR />
+      <div className="bgfx" aria-hidden="true" />
+      <div className="wrap">
+        <Header />
+        <Hero />
+        <TrustStrip />
+
+        <section id="urunler">
+          <div className="shop-head">
+            <h2>Vitrin</h2>
+            <span className="count" aria-live="polite">{visible.length} ürün</span>
+          </div>
+          <CategoryFilter categories={categories} active={category} onChange={setCategory} />
+          <ProductList products={visible} onOpenDetail={openDetail} onRequest={openRequest} />
+        </section>
+
+        <Story />
+        <CatalogQR />
+        <p className="foot-note">Güner Doğaltaş · Eğitim projesi. Ürün bilgileri örnektir.</p>
+      </div>
+
+      <MobileBar />
+
+      {modal && (
+        <Modal key={modal.type} onClose={close} narrow={modal.type === 'request'}>
+          {modal.type === 'detail' ? (
+            <ProductDetail product={modal.product} onRequest={openRequest} />
+          ) : (
+            <RequestForm product={modal.product} onClose={close} />
+          )}
+        </Modal>
+      )}
     </>
   );
 }

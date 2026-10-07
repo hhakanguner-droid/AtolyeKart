@@ -13,9 +13,12 @@ Eğitim projesi: BizCard'ın yanında yürüyen ikinci proje. Haftalık ödev se
 - **Dil / ton:** Türkçe, sıcak ve samimi, kısa açıklamalar. Para birimi ₺.
 
 ## Teknik durum
-- Hafta 1.1 tek dosya HTML idi (git geçmişinde); 1.2 ile React'e geçildi
-- Vite + React: `src/components/` altında `ProductCard`, `ProductList`, `ProductImage`
-- Ürün verisi `src/data/products.js` içinde `products` dizisi (id, name, category, price, description, inStock)
+- Vite + React. Sayfa bölümleri `src/components/` altında: `Header`, `Hero`, `TrustStrip`, `CategoryFilter`, `ProductList`, `ProductCard`, `ProductImage`, `Story`, `CatalogQR`, `MobileBar`
+- Pencereler: `Modal` (ortak kabuk), `ProductDetail` (ürün detayı), `RequestForm` (stokta olana sipariş, tükenene stok bildirimi)
+- Ürün verisi `src/data/products.js` içinde `products` dizisi (id, name, category, price, description, inStock, badge, image, specs)
+- Ürün fotoğrafları `public/images/pN.jpg`. Fotoğrafı olmayan ürün kategori renginde emoji kutusu gösterir.
+- WhatsApp: numarasız `wa.me/?text=...` bağlantısı (`src/lib/whatsapp.js`), kişi seçtirir, mesaj hazır gelir.
+- Tasarım: toprak tonları, başlıkta Cormorant Garamond, gövdede Manrope, arka planda sabit taş damarı. Renkler `src/styles.css` başındaki değişkenlerde; karanlık mod destekli.
 
 ## Webhook veri sözleşmesi (Hafta 1)
 - Sipariş: `event, name, productId, productName, phone, email, quantity, source`

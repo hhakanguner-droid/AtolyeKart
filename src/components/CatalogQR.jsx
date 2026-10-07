@@ -4,7 +4,7 @@ import { QRCodeSVG } from 'qrcode.react';
 export default function CatalogQR() {
   return (
     <footer className="qr">
-      <QRCodeSVG value={window.location.origin} size={120} fgColor="#3b2f2a" bgColor="#ffffff" />
+      <QRCodeSVG value={window.location.origin} size={120} fgColor="#2b211c" bgColor="#ffffff" />
       <p>Kataloğu telefonunda aç: kodu okut</p>
     </footer>
   );

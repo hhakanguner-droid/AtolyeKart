@@ -1,11 +1,11 @@
 import ProductCard from './ProductCard.jsx';
 
-export default function ProductList({ products }) {
+export default function ProductList({ products, onOpenDetail, onRequest }) {
   return (
-    <main className="grid">
+    <div className="grid">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} onOpenDetail={onOpenDetail} onRequest={onRequest} />
       ))}
-    </main>
+    </div>
   );
 }
