@@ -2,6 +2,16 @@ const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL;
 const SOURCE = 'atolyekart-web';
 
 export async function sendWebhook(payload) {
+  // Sipariş: sunucu fonksiyonu (/api/order) üzerinden n8n'e gider.
+  if (payload.event === 'order_created') {
+    const r = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!r.ok) throw new Error('Sipariş gönderilemedi.');
+    return;
+  }
   if (!WEBHOOK_URL) {
     throw new Error('VITE_WEBHOOK_URL tanımlı değil (.env dosyasına bak).');
   }
