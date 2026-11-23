@@ -10,6 +10,7 @@ import MobileBar from './components/MobileBar.jsx';
 import Modal from './components/Modal.jsx';
 import ProductDetail from './components/ProductDetail.jsx';
 import RequestForm from './components/RequestForm.jsx';
+import ChatWidget from './components/ChatWidget.jsx';
 import { products, categories, ALL_CATEGORIES } from './data/products.js';
 import { isInStock } from './lib/stock.js';
 
@@ -53,6 +54,7 @@ export default function App() {
       </div>
 
       <MobileBar />
+      <ChatWidget />
 
       {modal && (
         <Modal key={modal.type} onClose={close} label={modalLabel(modal)} narrow={modal.type === 'request'}>
